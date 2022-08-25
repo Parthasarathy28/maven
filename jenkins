@@ -1,1 +1,52 @@
 
+pipeline
+{
+    agent { node ('built-in') }
+    stages
+    {
+        stage ('continues download')
+        {
+            steps
+            {
+                git 'https://github.com/keshavr21/maven_test.git'
+            }
+        }
+        stage ('continues build')
+        {
+            steps
+            {
+                sh '"/opt/maven/bin/mvn" clean package'
+            }
+        }
+        stage ('continues deployment')
+        {
+            steps
+            {
+               deploy adapters: [tomcat9(credentialsId: '15d8b3b2-1981-4a3a-ae9b-c864f9fa8d16', path: '', url: 'http://3.111.217.102:8080/')], contextPath: 'pipeline_2', war: '**/*.war'
+            }
+        }
+        stage ('continues testing')
+        {
+            steps
+            {
+               git 'https://github.com/keshavr21/test_cases.git'
+              sh 'java -jar testing.jar webapp/target/webapp.war'    
+                
+            }
+        }
+        stage ('continues delivery')
+        {
+            steps
+            {
+                 deploy adapters: [tomcat9(credentialsId: '15d8b3b2-1981-4a3a-ae9b-c864f9fa8d16', path: '', url: 'http://3.111.217.102:8080/')], contextPath: 'production', war: '**/*.war'
+            }
+        }
+        stage ('Email')
+        {
+            steps
+            {
+                mail bcc: '', body: 'success', cc: '', from: '', replyTo: '', subject: 'declarative pipeline ', to: 'parthasarathi.aprandahman@gmail.com'
+            }
+        }
+    }
+} 
