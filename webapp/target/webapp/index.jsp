@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1>JENKINS CLASSES</h1>
+<h1>PIPELINE_WITH_SCM</h1>
 </body>
 <body style="color:red;">
  <div class="container">
