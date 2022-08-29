@@ -1,6 +1,6 @@
 <html>
 <body>
-<h1>JENKINS CLASSES</h1>
+<h1>WEBHOOK_PIPELINE</h1>
 </body>
 <body style="color:red;">
  <div class="container">
